@@ -23,6 +23,12 @@ const RegisterPage = () => {
   password,
   password2: confirmPassword,
 });
+    navigate("/login");
+  }   catch (err) {
+    console.error(err);
+    setError("Registration failed. Please check your inputs.");
+  }
+};
 
     if (!username.trim() || !password || !passwordConfirm) {
       setError('Please fill in all required fields.');
