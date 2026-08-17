@@ -50,17 +50,6 @@ const RegisterPage = () => {
       setError('Password must be at least 6 characters long.');
       return;
     }
-
-    
-
-    const result = await register(username.trim(), email.trim(), password, passwordConfirm);
-    setSubmitting(false);
-
-    if (result.success) {
-      navigate('/', { replace: true });
-    } else {
-      setError(result.error);
-    }
   };
 
   return (
