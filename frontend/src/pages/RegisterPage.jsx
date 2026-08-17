@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Lock, User, Mail, BookHeart, ArrowRight, AlertCircle, CheckCircle } from 'lucide-react';
+import api from "../api/axios";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -16,6 +17,12 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await api.post("auth/register/", {
+  username,
+  email,
+  password,
+  password2: confirmPassword,
+});
 
     if (!username.trim() || !password || !passwordConfirm) {
       setError('Please fill in all required fields.');
