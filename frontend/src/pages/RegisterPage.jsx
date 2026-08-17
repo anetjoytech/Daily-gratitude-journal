@@ -17,36 +17,41 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await api.post("auth/register/", {
-  username,
-  email,
-  password,
-  password2: confirmPassword,
-});
+     if (!username.trim() || !password || !passwordConfirm) {
+      setError('Please fill in all required fields.');
+      return;
+
+    if (password !== passwordConfirm) {
+      setError('Passwords do not match.');
+      return;
+    }
+    try{
+      setError('');
+      setSubmitting(true);
+
+      await api.post("auth/register/", {
+      username,
+      email,
+      password,
+      password2: confirmPassword,
+    });
     navigate("/login");
-  }   catch (err) {
+  } catch (err) {
     console.error(err);
     setError("Registration failed. Please check your inputs.");
+  } finally{
+    setSubmitting(false);
   }
 };
 
-    if (!username.trim() || !password || !passwordConfirm) {
-      setError('Please fill in all required fields.');
-      return;
-    }
+
 
     if (password.length < 6) {
       setError('Password must be at least 6 characters long.');
       return;
     }
 
-    if (password !== passwordConfirm) {
-      setError('Passwords do not match.');
-      return;
-    }
-
-    setError('');
-    setSubmitting(true);
+    
 
     const result = await register(username.trim(), email.trim(), password, passwordConfirm);
     setSubmitting(false);
